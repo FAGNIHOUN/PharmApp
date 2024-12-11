@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ReservationPage = () => {
+  const navigate = useNavigate(); // Utilisation de useNavigate pour la navigation
   const [selectedMedicine, setSelectedMedicine] = useState("");
 
   useEffect(() => {
@@ -40,6 +42,8 @@ const ReservationPage = () => {
 
       <div className="p-6 mt-4 bg-white rounded-t-3xl">
         <main className="p-6">
+          
+
           {!reservationConfirmed ? (
             <form
               onSubmit={handleReservation}
@@ -80,7 +84,7 @@ const ReservationPage = () => {
                   type="text"
                   id="name"
                   value={userInfo.name}
-                  onChange={(e) => setUserInfo((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setUserInfo((prev) => ({ ...prev, name: e.target.value }))} 
                   className="w-full px-3 py-2 border rounded-lg"
                 />
               </div>
@@ -100,15 +104,15 @@ const ReservationPage = () => {
 
               <div className="mb-4 text-black">
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
-                  Descrption
+                  Description
                 </label>
                 <input
                   type="text"
                   id="name"
                   value={userInfo.name}
-                  onChange={(e) => setUserInfo((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setUserInfo((prev) => ({ ...prev, name: e.target.value }))} 
                   className="w-full px-3 py-2 border rounded-lg"
-                  placeholder='Mettez toutes informations possible(dossage...)'
+                  placeholder='Mettez toutes informations possibles (dosage...)'
                 />
               </div>
 
@@ -130,6 +134,13 @@ const ReservationPage = () => {
               </button>
             </div>
           )}
+          {/* Bouton "Retour" */}
+          <button
+            onClick={() => navigate(-1)} // Retour à la page précédente
+           className="w-[470px] px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 ml-96"
+          >
+            Retour
+          </button>
         </main>
       </div>
 

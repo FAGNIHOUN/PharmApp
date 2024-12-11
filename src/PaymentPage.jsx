@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Ajout de useNavigate
 
 const PaymentPage = () => {
+  const navigate = useNavigate(); // Initialisation de useNavigate
   const [userInfo, setUserInfo] = useState({
     name: '',
     cardNumber: '',
@@ -109,6 +111,14 @@ const PaymentPage = () => {
               Confirmer le paiement
             </button>
           </form>
+
+          {/* Bouton Retour */}
+          <button
+            onClick={() => navigate(-1)} // Retour à la page précédente
+            className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 mt-4"
+          >
+            Retour
+          </button>
         </div>
       </div>
     </div>

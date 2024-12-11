@@ -180,12 +180,12 @@ const HomePage = ({ onNavigate }) => {
     <div className="min-h-screen text-white bg-gradient-to-b from-blue-500 to-blue-700 mb-14">
       {/* En-tête */}
       <header className="p-6 pb-0">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">PharmaCare</h1>
-          <Bell className="text-white" size={28} />
-        </div>
-        <p className="mt-2 text-white/80">Votre assistant santé numérique</p>
-      </header>
+  <div className="flex items-center justify-between">
+    <img src="/Logo.jpeg" alt="Logo" className="h-10" />
+    <h1 className="text-3xl font-bold ml-4">PharmaCare</h1>
+  </div>
+</header>
+
 
       {/* Barre de recherche */}
       <div className="p-6">
