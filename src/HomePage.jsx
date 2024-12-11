@@ -11,6 +11,7 @@ import {
   Navigation, // Ajout de l'icône Navigation
   Map as MapIcon // Ajout de l'icône Map
 } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 // Données des pharmacies
 const pharmaciesData = [
@@ -107,8 +108,10 @@ const pharmaciesData = [
 const HomePage = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [pharmacies, setPharmacies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");  // Nouvel état pour le terme de recherche
-  const [selectedPharmacy, setSelectedPharmacy] = useState(null); // État pour la pharmacie sélectionnée
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPharmacy, setSelectedPharmacy] = useState(null);
+  const [searchedMedicine, setSearchedMedicine] = useState("");
+
 
   useEffect(() => {
     // Ce hook est appelé quand `selectedCategory` ou `searchTerm` change
@@ -139,6 +142,40 @@ const HomePage = ({ onNavigate }) => {
     setSelectedPharmacy(null);
   };
 
+  const handleSearchChange = (value) => {
+    const trimmedValue = value.trim(); // Supprime les espaces autour de la recherche
+    setSearchTerm(trimmedValue);
+    
+    // Enregistrer la recherche dans le localStorage
+    localStorage.setItem("searchedMedicine", trimmedValue);
+    
+    // Vérifiez si un médicament correspond
+    const searchedMedicines = pharmaciesData.filter((pharmacy) =>
+      pharmacy.medicines.some((medicine) =>
+        medicine.toLowerCase() === trimmedValue.toLowerCase() // Correspondance exacte
+      )
+    );
+  
+    // Si un médicament correspond, stockez-le
+    setSearchedMedicine(trimmedValue); // Stocke le médicament recherché
+    
+    // Affichage dans la console pour validation
+    console.log("Mot recherché :", trimmedValue);
+    console.log("Médicaments trouvés dans les pharmacies :", searchedMedicines);
+  
+    // Stocker les résultats trouvés
+    setPharmacies(searchedMedicines); // Réafficher les pharmacies correspondantes
+  };
+  
+  
+  
+
+  const handleNavigateToMap = (coordinates) => {
+    const [latitude, longitude] = coordinates;
+    const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    window.open(mapUrl, "_blank");
+  };
+
   return (
     <div className="min-h-screen text-white bg-gradient-to-b from-blue-500 to-blue-700 mb-14">
       {/* En-tête */}
@@ -158,11 +195,12 @@ const HomePage = ({ onNavigate }) => {
             type="text" 
             placeholder="Rechercher un médicament"
             className="w-full text-white bg-transparent outline-none placeholder-white/70"
-            value={searchTerm} // Lier à l'état searchTerm
-            onChange={(e) => setSearchTerm(e.target.value)} // Mettre à jour searchTerm
+            value={searchTerm}
+            onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
       </div>
+
 
       {/* Services rapides */}
       <div className="p-6 mt-4 bg-white rounded-t-3xl">
@@ -203,6 +241,7 @@ const HomePage = ({ onNavigate }) => {
                 <div>
                   <p className="font-semibold text-blue-800">Distance</p>
                   <p className='text-gray-600'>{selectedPharmacy.distance} km</p>
+                  
                 </div>
                 <div>
                   <p className="font-semibold text-blue-800">Téléphone</p>
@@ -212,6 +251,17 @@ const HomePage = ({ onNavigate }) => {
                   <p className="font-semibold text-blue-800">Prix</p>
                   <p className='text-gray-600'>{selectedPharmacy.price} FCFA</p>
                 </div>
+                <div>
+                  <p className="font-semibold text-blue-800">Médicaments</p>
+                  <ul className="text-gray-600">
+                    {selectedPharmacy.medicines
+                      .filter((medicine) => medicine.toLowerCase() === searchedMedicine.toLowerCase()) // Filtrer pour afficher uniquement le médicament recherché
+                      .map((medicine, index) => (
+                        <li key={index}>{medicine}</li>
+                      ))}
+                  </ul>
+                </div>
+
               </div>
 
               <div className="flex justify-center space-x-4">
@@ -221,17 +271,26 @@ const HomePage = ({ onNavigate }) => {
                 >
                   Retour à la liste
                 </button>
+                <NavLink to={{ pathname:"/reservation", state: { searchedMedicine: searchedMedicine }}}>
+                  <button
+                    className="px-4 py-2 text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600"
+                  >
+                    Réserver
+                  </button>
+                </NavLink>
+                <NavLink to={{ pathname: "/paiement", state: { searchedMedicine, pharmacy: selectedPharmacy } }}>
+                  <button
+                    className="px-4 py-2 text-white transition-colors bg-green-500 rounded-lg hover:bg-green-600"
+                  >
+                    Payer en ligne
+                  </button>
+                </NavLink>
+
                 <button
                   className="px-4 py-2 text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600"
-                  onClick={() => alert("Réservation effectuée !")}
+                  onClick={() => handleNavigateToMap(selectedPharmacy.coordinates)}
                 >
-                  Réserver
-                </button>
-                <button
-                  className="px-4 py-2 text-white transition-colors bg-green-500 rounded-lg hover:bg-green-600"
-                  onClick={() => alert("Paiement en ligne initié !")}
-                >
-                  Payer en ligne
+                  Itinéraire
                 </button>
               </div>
             </div>
@@ -251,7 +310,7 @@ const HomePage = ({ onNavigate }) => {
                           {pharmacy.name}
                         </h3>
                         <p className="text-sm text-gray-600">
-                          {pharmacy.address} • {pharmacy.distance} km
+                          {pharmacy.address} • {pharmacy.distance} km • {pharmacy.price} FCFA
                         </p>
                       </div>
                       <MapPin className="text-green-500" />

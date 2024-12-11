@@ -3,6 +3,8 @@ import { useState } from 'react';
 import HomePage from './HomePage.jsx';
 import Mission from "./OurMissionPage.jsx";
 import Marche from "./HowItWorksPage.jsx";
+import ReservationPage from "./Reserve.jsx";
+import Paiement from "./PaymentPage.jsx";
 import { AiFillHome, AiOutlineInfoCircle, AiFillFlag } from 'react-icons/ai';
 
 const NavigationBottom = ({ activeTab, onTabChange }) => {
@@ -44,15 +46,19 @@ export default function App() {
     <Router>
       <div className="min-h-screen">
         <Routes>
-          <Route 
-            path="/" 
+          {/* Route principale avec navigation */}
+          <Route
+            path="/"
             element={
               activeTab === 'home' ? <HomePage /> :
-              activeTab === 'our-mission' ? <Mission /> : // Correction ici
-              activeTab === 'how-it-works' ? <Marche /> : // Correction ici
-              <HomePage /> // Par défaut, rediriger vers la page d'accueil
+              activeTab === 'our-mission' ? <Mission /> :
+              activeTab === 'how-it-works' ? <Marche /> :
+              <HomePage />
             }
           />
+          {/* Route spécifique pour la réservation */}
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/paiement" element={<Paiement />} />
         </Routes>
         <NavigationBottom activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
