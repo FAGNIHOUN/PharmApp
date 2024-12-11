@@ -58,18 +58,18 @@ const PharmacyFinder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen p-6 bg-gray-50">
       <h1 className="text-3xl font-bold text-center text-blue-600">
         Trouver votre Médicament
       </h1>
 
-      <div className="mt-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <div className="flex items-center border-b pb-4">
+      <div className="max-w-4xl p-6 mx-auto mt-6 bg-white rounded-lg shadow-lg">
+        <div className="flex items-center pb-4 border-b">
           <Search className="text-gray-500" />
           <input
             type="text"
             placeholder="Rechercher un médicament..."
-            className="ml-4 flex-grow bg-transparent outline-none text-gray-700"
+            className="flex-grow ml-4 text-gray-700 bg-transparent outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -80,13 +80,13 @@ const PharmacyFinder = () => {
           {selectedPharmacy ? (
             // Détails de la pharmacie sélectionnée
             <div className="text-center">
-              <Navigation size={80} className="mx-auto text-blue-500 mb-6" />
-              <h2 className="text-2xl font-bold text-blue-900 mb-2">
+              <Navigation size={80} className="mx-auto mb-6 text-blue-500" />
+              <h2 className="mb-2 text-2xl font-bold text-blue-900">
                 {selectedPharmacy.name}
               </h2>
-              <p className="text-gray-600 mb-4">{selectedPharmacy.address}</p>
+              <p className="mb-4 text-gray-600">{selectedPharmacy.address}</p>
 
-              <div className="bg-blue-50 rounded-lg p-4 mb-4 grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 p-4 mb-4 rounded-lg bg-blue-50">
                 <div>
                   <p className="font-semibold text-blue-800">Distance</p>
                   <p>{selectedPharmacy.distance} km</p>
@@ -97,15 +97,15 @@ const PharmacyFinder = () => {
                 </div>
               </div>
 
-              <div className="flex space-x-4 justify-center">
+              <div className="flex justify-center space-x-4">
                 <button
                   onClick={handleBackToList}
-                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+                  className="px-4 py-2 text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300"
                 >
                   Retour
                 </button>
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+                  className="flex items-center px-4 py-2 text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600"
                   onClick={() => {
                     window.open(
                       `https://www.google.com/maps?q=${selectedPharmacy.coordinates.lat},${selectedPharmacy.coordinates.lng}`,
@@ -126,7 +126,7 @@ const PharmacyFinder = () => {
                   {filteredPharmacies.map((pharmacy) => (
                     <li
                       key={pharmacy.id}
-                      className="bg-gray-100 p-4 rounded-lg hover:shadow-md cursor-pointer flex justify-between items-center"
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg cursor-pointer hover:shadow-md"
                       onClick={() => setSelectedPharmacy(pharmacy)}
                     >
                       <div>
@@ -142,7 +142,7 @@ const PharmacyFinder = () => {
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500 text-center mt-4">
+                <p className="mt-4 text-center text-gray-500">
                   Aucune pharmacie de garde ne possède ce médicament pour le
                   moment.
                 </p>
