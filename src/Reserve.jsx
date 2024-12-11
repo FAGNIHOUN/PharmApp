@@ -137,10 +137,11 @@ const ReservationPage = () => {
           {/* Bouton "Retour" */}
           <button
             onClick={() => navigate(-1)} // Retour à la page précédente
-           className="w-[470px] px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 ml-28"
-          >
+            className="w-full md:w-auto px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 mt-4 md:mt-0"
+            >
             Retour
-          </button>
+            </button>
+
         </main>
       </div>
 
