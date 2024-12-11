@@ -182,7 +182,7 @@ const HomePage = ({ onNavigate }) => {
       <header className="p-6 pb-0">
   <div className="flex items-center justify-between">
     <img src="/Logo.jpeg" alt="Logo" className="h-10" />
-    <h1 className="text-3xl font-bold ml-4">PharmaCare</h1>
+    <h1 className="text-3xl font-bold ml-4">PharmaLink</h1>
   </div>
 </header>
 
