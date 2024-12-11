@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Importation pour la validation des props
 import { useState } from 'react'; // Importation pour gérer l'état local
@@ -47,42 +46,22 @@ function NavigationBar({ isAdmin, onAdminClick }) {
 
 // Composant personnalisé pour la page d'accueil avec des boutons
 function RoutePage({ content, routeButtons }) {
-=======
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
-import HomePage from './HomePage.jsx';
-import Mission from "./OurMissionPage.jsx";
-import Marche from "./HowItWorksPage.jsx";
-import { AiFillHome, AiOutlineInfoCircle, AiFillFlag } from 'react-icons/ai';
-
-const NavigationBottom = ({ activeTab, onTabChange }) => {
->>>>>>> Stashed changes
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-around p-4 bg-white shadow-md">
-      <button
-        onClick={() => onTabChange('home')}
-        className={`flex flex-col items-center ${activeTab === 'home' ? 'text-blue-600' : 'text-gray-500'}`}
-      >
-        <AiFillHome size={24} />
-        <span className="text-xs">Accueil</span>
-      </button>
-      <button
-        onClick={() => onTabChange('how-it-works')}
-        className={`flex flex-col items-center ${activeTab === 'how-it-works' ? 'text-blue-600' : 'text-gray-500'}`}
-      >
-        <AiOutlineInfoCircle size={24} />
-        <span className="text-xs">Comment ça marche</span>
-      </button>
-      <button
-        onClick={() => onTabChange('our-mission')}
-        className={`flex flex-col items-center ${activeTab === 'our-mission' ? 'text-blue-600' : 'text-gray-500'}`}
-      >
-        <AiFillFlag size={24} />
-        <span className="text-xs">Notre mission</span>
-      </button>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold mb-4">{content}</h1>
+      <div className="flex gap-4">
+        {routeButtons.map((button, index) => (
+          <Link
+            key={index}
+            to={button.route}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            {button.label}
+          </Link>
+        ))}
+      </div>
     </div>
   );
-<<<<<<< Updated upstream
 }
 
 // Validation des props avec prop-types
@@ -114,20 +93,10 @@ export default function App() {
     } else {
       alert('Invalid code!');
     }
-=======
-};
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
->>>>>>> Stashed changes
   };
 
   return (
     <Router>
-<<<<<<< Updated upstream
       <div>
         {/* Barre de navigation persistante */}
         <NavigationBar isAdmin={isAdmin} onAdminClick={handleAdminClick} />
@@ -179,21 +148,6 @@ export default function App() {
             </>
           )}
         </Routes>
-=======
-      <div className="min-h-screen">
-        <Routes>
-          <Route 
-            path="/" 
-            element={
-              activeTab === 'home' ? <HomePage /> :
-              activeTab === 'our-mission' ? <Mission /> : // Correction ici
-              activeTab === 'how-it-works' ? <Marche /> : // Correction ici
-              <HomePage /> // Par défaut, rediriger vers la page d'accueil
-            }
-          />
-        </Routes>
-        <NavigationBottom activeTab={activeTab} onTabChange={handleTabChange} />
->>>>>>> Stashed changes
       </div>
     </Router>
   );
